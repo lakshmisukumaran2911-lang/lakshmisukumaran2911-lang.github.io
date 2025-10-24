@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced MathSolver - Instant Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Global Styles (Attractive Theme) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif; /* Changed Font */
+        }
+        
+        :root {
+            --primary: #007bff; /* Vibrant Blue */
+            --primary-dark: #0056b3;
+            --secondary: #28a745; /* Green for Action */
+            --light: #f8f9fa;
+            --dark: #212529;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --hover-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.7;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: white;
+            background-color: var(--primary);
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+        }
+        
+        /* Main Content */
+        main {
+            padding: 60px 0;
+            min-height: calc(100vh - 150px);
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Home Page - Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary), #4caf50);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 50px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            background-color: var(--dark);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: transform 0.4s, box-shadow 0.4s;
+            border-top: 5px solid var(--secondary);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        /* Problem Solver Styles */
+        .problem-input {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+        }
+        
+        .text-input {
+            width: 100%;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            resize: vertical;
+            min-height: 150px;
+            transition: border-color 0.3s;
+        }
+        
+        .text-input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .solve-btn {
+            width: 100%;
+            padding: 18px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .solve-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+        }
+        
+        .examples {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px dashed #ced4da;
+        }
+        
+        .examples h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .example-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .example-item {
+            padding: 8px 15px;
+            background-color: #e9ecef;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .example-item:hover {
+            background-color: var(--secondary);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        /* Solution Area */
+        .solution-area {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            display: none;
+            border-left: 6px solid var(--secondary);
+        }
+        
+        .solution-area.active {
+            display: block;
+        }
+        
+        .solution-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .solution-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .solution-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .solution-link {
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+            background-color: #f1f8ff;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary);
+            transition: all 0.3s;
+        }
+        
+        .solution-link:hover {
+            background-color: #e0f0ff;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 123, 255, 0.2);
+        }
+        
+        .solution-link h4 {
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+        }
+        
+        .solution-link p {
+            margin-bottom: 20px;
+            color: #555;
+            flex-grow: 1;
+        }
+        
+        .solution-link a {
+            align-self: flex-start;
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .solution-link a:hover {
+            background-color: #1e7e34;
+            transform: scale(1.05);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            color: var(--secondary);
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            margin-bottom: 8px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .solution-links {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-magic"></i>
+                    <span>MathSolver Pro</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="problem">Instant Solver</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section id="home" class="page active">
+                <div class="hero">
+                    <h1>Unleash Your Math Power!</h1>
+                    <p>Get instant, direct links to step-by-step solutions for any math problem—from Algebra to Calculus. No sign-in, no delays, just solutions.</p>
+                    <a href="#" class="btn get-started-btn">Start Solving Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="features">
+                    <div class="feature-card">
+                        <i class="fas fa-rocket"></i>
+                        <h3>Lightning Fast Solutions</h3>
+                        <p>Direct links to the solution page on the world's best math websites.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-globe-asia"></i>
+                        <h3>Global & Indian Resources</h3>
+                        <p>Access resources trusted by students globally and locally (Doubtnut, Brainly, etc.).</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-user-lock"></i>
+                        <h3>Privacy First</h3>
+                        <p>Find your answers instantly without mandatory accounts or personal information.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="problem" class="page">
+                <h2 style="margin-bottom: 10px; font-weight: 700; color: var(--primary);">Instant Math Solver</h2>
+                <p style="margin-bottom: 30px; color: #555;">Type your problem. Click 'Solve'. Get direct links to solutions.</p>
+                
+                <div class="problem-input">
+                    <div class="input-area">
+                        <div class="text-input-area active">
+                            <textarea class="text-input" id="mathInput" placeholder="Enter your math problem here... E.g., solve 2x^2 + 5x - 3 = 0, derivative of e^(2x), log(100), probability of an event"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="examples">
+                        <h3>Quick Examples to Try:</h3>
+                        <div class="example-list">
+                            <div class="example-item" data-expr="solve 2x^2 + 5x - 3 = 0">Quadratic Equation</div>
+                            <div class="example-item" data-expr="derivative of e^(2x)">Derivative Problem</div>
+                            <div class="example-item" data-expr="integral of sin(x)">Integral Problem</div>
+                            <div class="example-item" data-expr="log(100) value">Logarithm</div>
+                            <div class="example-item" data-expr="sin(45) degrees">Trigonometry</div>
+                            <div class="example-item" data-expr="matrix multiplication 2x2">Matrices</div>
+                            <div class="example-item" data-expr="probability of tossing a coin">Probability</div>
+                            <div class="example-item" data-expr="area of circle with radius 5">Geometry</div>
+                        </div>
+                    </div>
+                    
+                    <button class="solve-btn" id="solveBtn">
+                        <i class="fas fa-bolt"></i> Find Instant Solutions
+                    </button>
+                </div>
+                
+                <div class="solution-area" id="solutionArea">
+                    <div class="solution-header">
+                        <h3 class="solution-title">Solution Resources Found:</h3>
+                    </div>
+                    <div class="solution-content" id="solutionContent">
+                        <p>Click on any link below to get the solution steps on the respective trusted website:</p>
+                        <div class="solution-links" id="solutionLinks">
+                            </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>MathSolver Pro</h3>
+                    <p>Your fastest gateway to mathematical answers. We connect you directly to the best global and Indian solvers.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#" class="nav-link" data-page="home">Home</a>
+                    <a href="#" class="nav-link" data-page="problem">Instant Solver</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Supported Topics</h3>
+                    <p>Algebra, Calculus, Trigonometry, Geometry, Statistics, and more.</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 MathSolver Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Math Problem Classifier with Direct Solution Links (UPDATED)
+        class MathProblemClassifier {
+            constructor() {
+                this.categories = {
+                    'algebra': {
+                        keywords: ['algebra', 'equation', 'polynomial', 'quadratic', 'linear', 'factor', 'solve for x', 'expression'],
+                        resources: [
+                            { name: "Wolfram Alpha - Algebra", description: "Step-by-step solutions for algebraic problems (Global)", url: "https://www.wolframalpha.com/input?i=" },
+                            { name: "Symbolab - Algebra Calculator", description: "Algebra calculator with steps (Global)", url: "https://www.symbolab.com/solver/algebra-calculator/" },
+                            { name: "Doubtnut - Indian Board Solver", description: "Video solutions for school-level problems (Indian Context)", url: "https://doubtnut.com/question-answer/" },
+                        ]
+                    },
+                    'calculus': {
+                        keywords: ['calculus', 'derivative', 'integral', 'limit', 'differentiate', 'integrate', 'd/dx', '∫'],
+                        resources: [
+                            { name: "Wolfram Alpha - Calculus", description: "Calculus problems solver with steps (Global)", url: "https://www.wolframalpha.com/input?i=" },
+                            { name: "Symbolab - Calculus Calculator", description: "Derivative and integral calculator (Global)", url: "https://www.symbolab.com/solver/calculus-calculator/" },
+                            { name: "Derivative Calculator", description: "Step-by-step derivative calculator (Global)", url: "https://www.derivative-calculator.net/?f=" },
+                            { name: "Integral Calculator", description: "Step-by-step integral calculator (Global)", url: "https://www.integral-calculator.com/?f=" },
+                        ]
+                    },
+                    'trigonometry': {
+                        keywords: ['trigonometry', 'sin', 'cos', 'tan', 'sine', 'cosine', 'tangent', 'angle', 'degree', 'radian'],
+                        resources: [
+                            { name: "Wolfram Alpha - Trigonometry", description: "Trigonometric function calculations (Global)", url: "https://www.wolframalpha.com/input?i=" },
+                            { name: "Symbolab - Trigonometry Calculator", description: "Trigonometry calculator with steps (Global)", url: "https://www.symbolab.com/solver/trigonometry-calculator" },
+                        ]
+                    },
+                    'logarithms': {
+                        keywords: ['log', 'logarithm', 'ln', 'logarithmic', 'exponential'],
+                        resources: [
+                            { name: "Wolfram Alpha - Logarithms", description: "Logarithm calculations and properties (Global)", url: "https://www.wolframalpha.com/input?i=" },
+                            { name: "Symbolab - Logarithm Calculator", description: "Logarithm calculator with steps (Global)", url: "https://www.symbolab.com/solver/logarithmic-equation-calculator" },
+                        ]
+                    },
+                    'geometry': {
+                        keywords: ['geometry', 'triangle', 'circle', 'area', 'perimeter', 'volume', 'angle', 'shape'],
+                        resources: [
+                            { name: "Wolfram Alpha - Geometry", description: "Geometric calculations and proofs (Global)", url: "https://www.wolframalpha.com/input?i=" },
+                            { name: "Symbolab - Geometry Calculator", description: "Geometry calculator with steps (Global)", url: "https://www.symbolab.com/geometry-calculator" },
+                            { name: "CalculatorSoup - Geometry", description: "Various geometry calculators (Global)", url: "https://www.calculatorsoup.com/calculators/geometry-calculators.php" },
+                        ]
+                    },
+                    'statistics': {
+                        keywords: ['statistics', 'probability', 'mean', 'median', 'mode', 'standard deviation', 'distribution'],
+                        resources: [
+                            { name: "Wolfram Alpha - Statistics", description: "Statistical calculations and analysis (Global)", url: "https://www.wolframalpha.com/input?i=" },
+                            { name: "Symbolab - Statistics Calculator", description: "Statistics calculator with steps (Global)", url: "https://www.symbolab.com/solver/statistics-calculator" },
+                        ]
+                    },
+                    'matrices': {
+                        keywords: ['matrix', 'matrices', 'determinant', 'eigenvalue', 'inverse matrix', 'multiplication'],
+                        resources: [
+                            { name: "Wolfram Alpha - Matrices", description: "Matrix operations and calculations (Global)", url: "https://www.wolframalpha.com/input?i=" },
+                            { name: "Symbolab - Matrix Calculator", description: "Matrix calculator with steps (Global)", url: "https://www.symbolab.com/solver/matrix-calculator" },
+                        ]
+                    }
+                };
+            }
+            
+            classifyProblem(problem) {
+                problem = problem.toLowerCase();
+                let matchedCategories = [];
+                
+                for (const [category, data] of Object.entries(this.categories)) {
+                    for (const keyword of data.keywords) {
+                        if (problem.includes(keyword) || problem.includes(keyword.replace(/ /g, ''))) {
+                            matchedCategories.push(category);
+                            break;
+                        }
+                    }
+                }
+                
+                let resources = [];
+                // Collect resources from all matched categories
+                for (const category of matchedCategories) {
+                    resources = resources.concat(this.categories[category].resources);
+                }
+                
+                // Add general and Indian-specific resources if no specific category is matched or to provide more options
+                if (matchedCategories.length < 2) {
+                    resources = resources.concat(this.getGeneralResources(problem));
+                }
+
+                // Remove duplicates based on resource name
+                resources = resources.filter((resource, index, self) => 
+                    index === self.findIndex(r => r.name === resource.name)
+                );
+
+                // Prioritize general high-quality solvers
+                const order = ["Wolfram Alpha", "Symbolab", "Doubtnut", "Brainly"];
+                resources.sort((a, b) => {
+                    const aIndex = order.indexOf(a.name.split(' - ')[0]);
+                    const bIndex = order.indexOf(b.name.split(' - ')[0]);
+                    
+                    if (aIndex === -1 && bIndex === -1) return 0;
+                    if (aIndex === -1) return 1;
+                    if (bIndex === -1) return -1;
+                    return aIndex - bIndex;
+                });
+                
+                return resources.slice(0, 5); // Limit to top 5 results for clean view
+            }
+            
+            getGeneralResources(problem) {
+                // Universal solvers that work for almost anything
+                return [
+                    { name: "Wolfram Alpha", description: "Computational knowledge engine for all math problems (Global)", url: "https://www.wolframalpha.com/input?i=" + encodeURIComponent(problem) },
+                    { name: "Symbolab", description: "Step-by-step calculator for math problems (Global)", url: "https://www.symbolab.com/solver/" + encodeURIComponent(problem) },
+                    { name: "Doubtnut - Indian Board Solver", description: "Video solutions for school-level problems (Indian Context)", url: "https://doubtnut.com/question-answer/" + encodeURIComponent(problem) },
+                    { name: "Brainly - Community Help", description: "Student community for Q&A (Indian Context)", url: "https://brainly.in/app/ask?q=" + encodeURIComponent(problem) },
+                ];
+            }
+        }
+
+        // Initialize the classifier
+        const problemClassifier = new MathProblemClassifier();
+
+        // Page Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                document.querySelectorAll('.nav-link').forEach(item => {
+                    item.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const pageId = this.getAttribute('data-page');
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(pageId).classList.add('active');
+                
+                window.scrollTo(0, 0); // Scroll to top on page change
+            });
+        });
+
+        // Get Started Button
+        document.querySelector('.get-started-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            document.querySelectorAll('.nav-link').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector('.nav-link[data-page="problem"]').classList.add('active');
+            
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById('problem').classList.add('active');
+            
+            window.scrollTo(0, 0);
+        });
+
+        // Example Problems
+        document.querySelectorAll('.example-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const expression = this.getAttribute('data-expr');
+                document.getElementById('mathInput').value = expression;
+                // Automatically click solve button after setting example
+                document.getElementById('solveBtn').click();
+            });
+        });
+
+        // Find Solutions Logic
+        document.getElementById('solveBtn').addEventListener('click', function() {
+            const mathInput = document.getElementById('mathInput').value.trim();
+            const solutionArea = document.getElementById('solutionArea');
+            const solutionLinks = document.getElementById('solutionLinks');
+            const solveBtn = this;
+            
+            if (!mathInput) {
+                alert('தயவுசெய்து ஒரு கணிதப் பிரச்சனையை உள்ளிடவும்.');
+                return;
+            }
+            
+            // Show loading state
+            const originalHTML = solveBtn.innerHTML;
+            solveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Solutions தேடப்படுகிறது...';
+            solveBtn.disabled = true;
+            
+            // Simulate API call delay for better user experience
+            setTimeout(() => {
+                // Reset button
+                solveBtn.innerHTML = originalHTML;
+                solveBtn.disabled = false;
+                
+                // Classify the problem and get resources
+                const resources = problemClassifier.classifyProblem(mathInput);
+                
+                // Display the solution links
+                let linksHTML = '';
+                resources.forEach(resource => {
+                    // Properly encode the problem for URL
+                    const problemEncoded = encodeURIComponent(mathInput);
+                    let resourceUrl = resource.url;
+
+                    // Append the problem to the appropriate part of the URL
+                    if (resource.name.includes("Wolfram Alpha") || resource.name.includes("Symbolab") || resource.name.includes("Doubtnut") || resource.name.includes("Brainly")) {
+                        // For these general solvers, the query is usually appended
+                        resourceUrl = resourceUrl + problemEncoded;
+                    } else if (resource.name.includes("Derivative") || resource.name.includes("Integral")) {
+                        // For specific calculators like derivative/integral-calculator.net
+                        resourceUrl = resourceUrl + problemEncoded;
+                    } else {
+                        // Fallback for other resources if needed
+                        resourceUrl = resourceUrl + problemEncoded;
+                    }
+
+                    linksHTML += `
+                        <div class="solution-link">
+                            <h4>${resource.name}</h4>
+                            <p>${resource.description}</p>
+                            <a href="${resourceUrl}" target="_blank">View Solution <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    `;
+                });
+                
+                if (resources.length === 0) {
+                    linksHTML = `<p style="color: red; font-weight: 600;">Solution Links கிடைக்கவில்லை. உங்கள் கேள்வியை தெளிவாக உள்ளிடவும் அல்லது பொதுவான தேடலுக்கு முயற்சிக்கவும்.</p>`;
+                }
+                
+                solutionLinks.innerHTML = linksHTML;
+                
+                // Show solution area
+                solutionArea.classList.add('active');
+                
+                // Scroll to solution area
+                solutionArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 1200); // 1.2 second delay
+        });
+    </script>
+</body>
+</html>
